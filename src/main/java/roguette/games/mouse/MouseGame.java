@@ -10,10 +10,6 @@ import roguette.Item;
 import roguette.Items;
 import roguette.Keys;
 import roguette.Location;
-import static roguette.Location.DOWN;
-import static roguette.Location.LEFT;
-import static roguette.Location.RIGHT;
-import static roguette.Location.UP;
 import roguette.Model;
 import roguette.Movement;
 import roguette.Occupant;
@@ -37,21 +33,22 @@ public class MouseGame implements Game {
     private final Movement movement;
     private int gameState;
     private int fluffCount;
+    private App app;
 
-    public MouseGame(Model model) {
+    public MouseGame() {
 
-        this.model = Objects.requireNonNull(model);
-        this.astar = new MouseAStar(model);
-        this.movement = new Movement(model);
+        model = new MouseModel();
+        astar = new MouseAStar(model);
+        movement = new Movement(model);
+        app = new SwingApp(this, model.size);
+        app.setTimer(5000, 1000);
+        app.start();
     }
 
     public static void main(String[] args) {
-
-        Model model = new MouseModel();
-        Game game = new MouseGame(model);
-        App app = new SwingApp(game, model.size);
-        app.setTimer(5000, 1000);
-        app.start();
+        
+        MouseGame game = new MouseGame();
+        game.app.start();
     }
 
     @Override
@@ -64,25 +61,25 @@ public class MouseGame implements Game {
             case Keys.KEY_UP:
             case Keys.KEY_W:
                 player.moved = true;
-                player.direction = UP;
+                player.direction = Location.UP;
                 break;
 
             case Keys.KEY_DOWN:
             case Keys.KEY_S:
                 player.moved = true;
-                player.direction = DOWN;
+                player.direction = Location.DOWN;
                 break;
 
             case Keys.KEY_LEFT:
             case Keys.KEY_A:
                 player.moved = true;
-                player.direction = LEFT;
+                player.direction = Location.LEFT;
                 break;
 
             case Keys.KEY_RIGHT:
             case Keys.KEY_D:
                 player.moved = true;
-                player.direction = RIGHT;
+                player.direction = Location.RIGHT;
                 break;
         }
     }
