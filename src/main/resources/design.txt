@@ -1,0 +1,101 @@
+Mouse - A rogue-like designed from the top down
+
+
+1. Game overview
+
+    The player is controls a mouse by pressing keys on the keyboard.  She is
+able to move the mouse in four directions; up, down, left and right.  Moving the
+mouse decreases the mouse's health status by one tenth of a point.  The mouse
+may be moved to any floor area that is not occupied by another creature.  If a
+cheese items in on the same floor area that the mouse is on the mouse will pick
+it up and eat it, causing its health status to increase by one point.  If a
+fluff item is on the same floor area as the mouse the mouse will pick it up and
+store it in its inventory.  If the mouse has any fluff items in its inventory
+when it moves onto a home floor area and that area has no fluff items in it
+already, it will drop one fluff item.  When all the home floor areas have a
+fluff item in them the game is complete and the player wins.  If at any point
+the mouse's health status drop to zero or below the game is complete and the
+player loses.  The game world is composed of many connected rooms.
+
+    Randomly placed in the rooms are enemy cats.  The cats will patrol the rooms
+by following either the left-hand or right-hand walls.  When a cat's distance to
+the mouse is less than ten units it will pursue the mouse until it is adjacent
+to it.  At that point it will attack the mouse, decreasing the mouse's health
+status by five points every second.  When the cat's distance to the mouse
+increases to more than ten units it will resume patrolling the rooms.  The mouse
+has the advantage of being faster than the cats.  It can move once every quarter
+of a second.  The cats can only move once every half a second.  Both the mouse
+and the cats can only move one unit at a time.  The cats have the advantage of
+being more numerous and not limited by a need to eat or loss of health status.
+
+    The mouse's current health status and the number of fluff items deposited in
+the home area are displayed always.  When the game is complete the player will
+be given the option to restart.  The layout of the rooms is procedurally
+generated for each game.  The original positions of the cheese and fluff items
+are random.
+
+
+2. Class overview
+
+    The game follows the model-view-controller design pattern.  The model is a
+simple data structure that keeps track of the location of walls, floors, the 
+home area, the mouse and cats. and all the fluff and cheese items.  The view is
+responsible for rendering the current state of the model and any messages and
+relaying key stokes to the controller.  The controller is responsible for
+applying the game logic as describe above.  Additionally, there is an
+application domain that is responsible for initializing and connecting the
+model, view and controller and starting the game.
+
+    The model classes are divided into four types.  First are the structures
+which are represented by the Cell class.  A Cell can be either a wall, floor or
+home.  Second are the items represented by the Item class.  An Item can be
+either a cheese or fluffy.  A Cell may hold a variable number of Items.  Third
+are the creatures represented by the Creature class.  A creature may be either a
+cat or a mouse.  A creature has a health attribute and a list of items it is
+carrying.  However only the mouse will use these.  And fourth is the container
+of all these, the Grid class.  The Grid provides access to Cells, Items, and 
+Creatures by there location (column and row).
+
+    The view classes are divided into two types.  First is the graphical user
+interface, the Console class.  The console is responsible for displaying rows
+and columns of colored characters and has a status bar at the bottom for
+displaying messages about the state of the game; the mouse's health and the
+number of fluff items in the home area.  Second is the Renderer class.  It is 
+responsible for looking at the current state of the game and telling the
+Console which colors and characters to display in each column and row.
+
+    The controller class is divided into two groups.  First is the Game class
+which applies the game logic described above.  The Game class is also
+responsible for ending the game when it is complete and restarting it if the
+player requests that.  The Game class uses to utility classes to move the cats
+around the rooms; the AStar class and the WallFollowing class.  The AStar class
+finds the shortest path between a cat and the mouse and the WallFollowing class
+moves the cat around the rooms by always following either the left or right
+walls.
+
+    The application classes consist of a Main class that starts the program by
+creating the model, view and controller classes.  It uses a utility class,
+GridGenerator, to randomly generate the rooms. It also provides the Game
+instance with a method for restarting the game.  Signals in the game come from
+two sources; key input comes from the Console and regular timed input comes from
+the Timer class.  The main class intercepts these signals, relays the to the
+Game class, and instructs the Renderer class to update the Console.
+
+3. The Game class
+
+    The Game class needs two methods that allow it to receive input.  Key input
+will enter the Game class through the keyInput method.  That method provides the
+Game with the key code, the Grid instance which will be updated, and the Main 
+instance which will be needed to restart the game.  The keyInput method is the
+starting point for all player interaction.  Key input is limited to once per
+250 milliseconds.  Timer input will enter through the timerInput method.  The
+timerInput method provides the current tick count and the Grid.  All cat related
+actions start from the timerInput method which is called every 500 milliseconds.
+
+    The Game class needs to remember what state it is in.  The state can be
+either PLAY, WON, or LOST.  While in the PLAY state the Game updates the Grid
+according to the rules of the game.  On the conditions described above it may
+transition into either the WON or LOST state.  While in these states it suspends
+all play activity.  Through key input the player may signal that she wishes to 
+restart the game, in which case the Main instance is instructed to restart the 
+Game.

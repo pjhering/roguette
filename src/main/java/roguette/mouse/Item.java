@@ -1,4 +1,4 @@
-package roguette;
+package roguette.mouse;
 
 public class Item {
 
