@@ -6,17 +6,17 @@ public class Main {
     public static final int ROWS = 50;
     
     private Grid grid;
-    private Game game;
-    private Console console;
-    private Renderer renderer;
-    private Timer timer;
+    private final Game game;
+    private final Console console;
+    private final Renderer renderer;
+    private final Timer timer;
     
     Main() {
         
         grid = createGrid();
         game = createGame();
         console = createConsole();
-        renderer = createRenderer();
+        renderer = createRenderer(console);
         timer = createTimer();
     }
 
@@ -35,6 +35,7 @@ public class Main {
     private void begin() {
         
         console.setVisible(true);
+        timer.start();
     }
     
     private Grid createGrid(){
@@ -51,18 +52,35 @@ public class Main {
     }
 
     private Game createGame() {
-        return null;//TODO
+        
+        return new Game();
     }
     
     private Console createConsole() {
-        return null;//TODO
+        
+        final Main main = this;
+        Console c = new Console(COLUMNS, ROWS, (k) -> {
+            game.keyInput(k, grid, main);
+            renderer.render(grid);
+            console.update();
+        });
+        
+        return c;
     }
     
-    private Renderer createRenderer() {
-        return null;//TODO
+    private Renderer createRenderer(Console c) {
+        
+        return new Renderer(c);
     }
     
     private Timer createTimer() {
-        return null;//TODO
+        
+        Timer t = new Timer(5000, 1000, (tick) -> {
+            game.timerInput(tick, grid);
+            renderer.render(grid);
+            console.update();
+        });
+        
+        return t;
     }
 }

@@ -8,6 +8,11 @@ public class Game {
     
     private int state;
     
+    Game() {
+        
+        state = PLAY;
+    }
+    
     private void reset(Main main) {
         
         main.restart();

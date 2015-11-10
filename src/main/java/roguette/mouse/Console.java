@@ -18,6 +18,9 @@ public class Console {
     void setVisible(boolean b) {
     }
 
+    void update() {
+    }
+
     public static interface Observer {
         
         public void keyInput(int key);
