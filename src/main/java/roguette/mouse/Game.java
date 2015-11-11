@@ -2,6 +2,7 @@ package roguette.mouse;
 
 import java.awt.Point;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 public class Game {
     
@@ -77,21 +78,45 @@ public class Game {
         
         Point p1 = grid.locateCreature(mouseID);
         Point p2 = new Point(p1.x + dx, p1.y + dy);
+        Cell c1 = grid.getCell(p1.x, p1.y);
+        Creature mouse = c1.getOccupant();
         
         if(grid.isValidCell(p2)) {
             
-            Cell c = grid.getCell(p2.x, p2.y);
-            int cType = c.getType();
+            Cell c2 = grid.getCell(p2.x, p2.y);
+            int cType = c2.getType();
             
             if(cType == Cell.FLOOR || cType == Cell.HOME) {
                 
-                Creature o = c.getOccupant();
+                Creature cat = c2.getOccupant();
                 
-                if(o == null) {
+                if(cat == null) {
                     
                     grid.moveOccupant(p1, p2);
+                    
+                    if(cType == Cell.HOME) {
+                        
+                        // mouse enters HOME
+                        
+                        List<Item> items = grid.getItems(p2);
+                        
+                        if(items.isEmpty()) {
+                            
+                            List<Item> inv = mouse.getInventory();
+                        }
+                    }
+                    
+                } else {
+                    
+                    // mouse hits cat
                 }
+            } else {
+                
+                // mouse hits wall
             }
+        } else {
+            
+            // mouse hits boundary
         }
     }
     

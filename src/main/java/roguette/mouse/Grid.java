@@ -1,6 +1,7 @@
 package roguette.mouse;
 
 import java.awt.Point;
+import java.util.List;
 
 public class Grid {
     
@@ -52,5 +53,19 @@ public class Grid {
         
         cells[p1.x][p1.y].setOccupant(c2);
         cells[p2.x][p2.y].setOccupant(c1);
+    }
+
+    List<Item> getItems(Point p) {
+        
+        Cell c = cells[p.x][p.y];
+        
+        if(c != null) {
+            
+            return c.getItems();
+            
+        } else {
+            
+            return null;
+        }
     }
 }
