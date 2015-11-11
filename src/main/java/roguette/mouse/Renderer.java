@@ -1,6 +1,6 @@
 package roguette.mouse;
 
-import java.util.Objects;
+import static java.util.Objects.requireNonNull;
 
 public class Renderer {
     
@@ -8,7 +8,7 @@ public class Renderer {
 
     Renderer(Console c) {
         
-        this.console = Objects.requireNonNull(c);
+        this.console = requireNonNull(c);
     }
 
     void render(Grid grid) {

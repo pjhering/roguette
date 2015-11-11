@@ -1,6 +1,6 @@
 package roguette.mouse;
 
-import java.util.Objects;
+import static java.util.Objects.requireNonNull;
 
 public class Timer {
     
@@ -12,7 +12,7 @@ public class Timer {
         
         this.initialDelay = init;
         this.interval = inter;
-        this.observer = Objects.requireNonNull(obs);
+        this.observer = requireNonNull(obs);
     }
 
     void restart() {

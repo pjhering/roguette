@@ -1,6 +1,6 @@
 package roguette.mouse;
 
-import java.util.Objects;
+import static java.util.Objects.requireNonNull;
 
 public class Console {
     
@@ -12,7 +12,7 @@ public class Console {
         
         this.columns = columns;
         this.rows = rows;
-        this.observer = Objects.requireNonNull(observer);
+        this.observer = requireNonNull(observer);
     }
 
     void setVisible(boolean b) {

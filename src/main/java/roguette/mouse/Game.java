@@ -1,9 +1,21 @@
 package roguette.mouse;
 
 import java.awt.Point;
-import java.awt.event.KeyEvent;
+import static java.awt.event.KeyEvent.VK_A;
+import static java.awt.event.KeyEvent.VK_D;
+import static java.awt.event.KeyEvent.VK_DOWN;
+import static java.awt.event.KeyEvent.VK_ENTER;
+import static java.awt.event.KeyEvent.VK_LEFT;
+import static java.awt.event.KeyEvent.VK_RIGHT;
+import static java.awt.event.KeyEvent.VK_S;
+import static java.awt.event.KeyEvent.VK_UP;
+import static java.awt.event.KeyEvent.VK_W;
+import static java.lang.System.currentTimeMillis;
 import java.util.List;
-import java.util.Objects;
+import static roguette.mouse.Cell.FLOOR;
+import static roguette.mouse.Cell.HOME;
+import static roguette.mouse.Creature.CAT;
+import static roguette.mouse.Item.FLUFF;
 
 public class Game {
 
@@ -21,7 +33,7 @@ public class Game {
 
         this.mouseID = mouseID;
         state = PLAY;
-        keyTime = System.currentTimeMillis();
+        keyTime = currentTimeMillis();
         mover = new Movement();
     }
 
@@ -29,13 +41,13 @@ public class Game {
 
         main.restart();
         this.state = PLAY;
-        this.keyTime = System.currentTimeMillis();
+        this.keyTime = currentTimeMillis();
         this.fluffCount = 0;
     }
 
     public void keyInput(int key, Grid grid, Main main) {
 
-        long now = System.currentTimeMillis();
+        long now = currentTimeMillis();
 
         if (now - keyTime > 250) {
 
@@ -43,26 +55,26 @@ public class Game {
 
                 switch (key) {
 
-                    case KeyEvent.VK_UP:
-                    case KeyEvent.VK_W:
+                    case VK_UP:
+                    case VK_W:
                         movePlayer(grid, 0, -1);
                         keyTime = now;
                         break;
 
-                    case KeyEvent.VK_DOWN:
-                    case KeyEvent.VK_S:
+                    case VK_DOWN:
+                    case VK_S:
                         movePlayer(grid, 0, 1);
                         keyTime = now;
                         break;
 
-                    case KeyEvent.VK_LEFT:
-                    case KeyEvent.VK_A:
+                    case VK_LEFT:
+                    case VK_A:
                         movePlayer(grid, -1, 0);
                         keyTime = now;
                         break;
 
-                    case KeyEvent.VK_RIGHT:
-                    case KeyEvent.VK_D:
+                    case VK_RIGHT:
+                    case VK_D:
                         movePlayer(grid, 1, 0);
                         keyTime = now;
                         break;
@@ -71,7 +83,7 @@ public class Game {
 
                 switch (key) {
 
-                    case KeyEvent.VK_ENTER:
+                    case VK_ENTER:
                         this.reset(main);
                         keyTime = now;
                         break;
@@ -92,7 +104,7 @@ public class Game {
             Cell c2 = grid.getCell(p2.x, p2.y);
             int cType = c2.getType();
 
-            if (cType == Cell.FLOOR || cType == Cell.HOME) {
+            if (cType == FLOOR || cType == HOME) {
 
                 Creature cat = c2.getOccupant();
 
@@ -103,11 +115,11 @@ public class Game {
 
                     if (mouse.getHealth() <= 0.0) {
 
-                        this.state = Game.LOST;
+                        this.state = LOST;
                         return;
                     }
 
-                    if (cType == Cell.HOME) {
+                    if (cType == HOME) {
 
                         Item fluff = getFluff(mouse.getInventory());
 
@@ -122,7 +134,7 @@ public class Game {
                                 
                                 if(fluffCount == 9) {
                                     
-                                    this.state = Game.WON;
+                                    this.state = WON;
                                 }
                             }
                         }
@@ -134,7 +146,7 @@ public class Game {
                     
                     if(mouse.getHealth() <= 0.0) {
                         
-                        this.state = Game.LOST;
+                        this.state = LOST;
                     }
                 }
             } else {
@@ -153,7 +165,7 @@ public class Game {
 
         for (Item i : list) {
 
-            if (i.getType() == Item.FLUFF) {
+            if (i.getType() == FLUFF) {
 
                 fluff = i;
                 break;
@@ -174,7 +186,7 @@ public class Game {
 
         for (Item i : list) {
 
-            if (i.getType() == Item.FLUFF) {
+            if (i.getType() == FLUFF) {
 
                 flag = false;
                 break;
@@ -188,7 +200,7 @@ public class Game {
         
         Point p1 = grid.locateCreature(mouseID);
         
-        for(Point p2 : grid.getLocations(Creature.CAT)) {
+        for(Point p2 : grid.getLocations(CAT)) {
             
             double distance = p1.distance(p2);
             
@@ -227,7 +239,7 @@ public class Game {
         
         if(m.getHealth() <= 0) {
             
-            this.state = Game.LOST;
+            this.state = LOST;
         }
     }
 }

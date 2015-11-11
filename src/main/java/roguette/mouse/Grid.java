@@ -74,11 +74,8 @@ public class Grid {
         
         List<Creature> list = new ArrayList<>();
         
-        for(int x = 0; x < cells.length; x++) {
-            for(int y = 0; y < cells[x].length; y++) {
-                
-                Cell cell = cells[x][y];
-                
+        for (Cell[] cell1 : cells) {
+            for (Cell cell : cell1) {
                 if(cell != null) {
                     
                     Creature creature = cell.getOccupant();

@@ -2,7 +2,7 @@ package roguette.mouse;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import static java.util.UUID.randomUUID;
 
 public class Creature {
     
@@ -16,7 +16,7 @@ public class Creature {
 
     public Creature(int type) {
         
-        this.id = UUID.randomUUID().hashCode();
+        this.id = randomUUID().hashCode();
         this.type = type;
         
         if(type == MOUSE) {
