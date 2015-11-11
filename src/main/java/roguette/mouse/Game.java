@@ -3,6 +3,7 @@ package roguette.mouse;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.util.List;
+import java.util.Objects;
 
 public class Game {
 
@@ -14,12 +15,14 @@ public class Game {
     private int state;
     private long keyTime;
     private int fluffCount;
+    private Movement mover;
 
     Game(int mouseID) {
 
         this.mouseID = mouseID;
         state = PLAY;
         keyTime = System.currentTimeMillis();
+        mover = new Movement();
     }
 
     private void reset(Main main) {
@@ -120,12 +123,10 @@ public class Game {
                                 if(fluffCount == 9) {
                                     
                                     this.state = Game.WON;
-                                    return;
                                 }
                             }
                         }
                     }
-
                 } else {
 
                     // mouse hits cat
@@ -134,7 +135,6 @@ public class Game {
                     if(mouse.getHealth() <= 0.0) {
                         
                         this.state = Game.LOST;
-                        return;
                     }
                 }
             } else {
@@ -176,7 +176,7 @@ public class Game {
 
             if (i.getType() == Item.FLUFF) {
 
-                fluff = false;
+                flag = false;
                 break;
             }
         }
@@ -185,6 +185,49 @@ public class Game {
     }
 
     public void timerInput(int tick, Grid grid) {
-
+        
+        Point p1 = grid.locateCreature(mouseID);
+        
+        for(Point p2 : grid.getLocations(Creature.CAT)) {
+            
+            double distance = p1.distance(p2);
+            
+            if(distance > 10) {
+                
+                patrol(grid, p2);
+                
+            } else if(distance > 1) {
+                
+                pursue(grid, p2, p1);
+                
+            } else {
+                
+                attack(grid, p1);
+            }
+        }
+    }
+    
+    private void patrol(Grid grid, Point cat) {
+        
+        Point p2 = mover.nextPointFollowRightWall(grid, cat);
+        grid.moveOccupant(cat, p2);
+    }
+    
+    private void pursue(Grid grid, Point cat, Point mouse) {
+        
+        Point p2 = mover.nextPointAStar(grid, cat, mouse);
+        grid.moveOccupant(cat, p2);
+    }
+    
+    private void attack(Grid grid, Point mouse) {
+        
+        Cell cell = grid.getCell(mouse.x, mouse.y);
+        Creature m = cell.getOccupant();
+        m.setHealth(m.getHealth() - 5);
+        
+        if(m.getHealth() <= 0) {
+            
+            this.state = Game.LOST;
+        }
     }
 }

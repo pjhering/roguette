@@ -67,15 +67,12 @@ Console which colors and characters to display in each column and row.
     The controller class is divided into two groups.  First is the Game class
 which applies the game logic described above.  The Game class is also
 responsible for ending the game when it is complete and restarting it if the
-player requests that.  The Game class uses to utility classes to move the cats
-around the rooms; the AStar class and the WallFollowing class.  The AStar class
-finds the shortest path between a cat and the mouse and the WallFollowing class
-moves the cat around the rooms by always following either the left or right
-walls.
+player requests that.  The Game class uses a utility class to move the cats
+around the rooms; the Movement class.
 
     The application classes consist of a Main class that starts the program by
 creating the model, view and controller classes.  It uses a utility class,
-GridGenerator, to randomly generate the rooms. It also provides the Game
+GridBuilder, to randomly generate the rooms. It also provides the Game
 instance with a method for restarting the game.  Signals in the game come from
 two sources; key input comes from the Console and regular timed input comes from
 the Timer class.  The main class intercepts these signals, relays the to the

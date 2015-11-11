@@ -1,6 +1,7 @@
 package roguette.mouse;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Grid {
@@ -67,5 +68,53 @@ public class Grid {
             
             return null;
         }
+    }
+
+    Iterable<Creature> getCreatures(int type) {
+        
+        List<Creature> list = new ArrayList<>();
+        
+        for(int x = 0; x < cells.length; x++) {
+            for(int y = 0; y < cells[x].length; y++) {
+                
+                Cell cell = cells[x][y];
+                
+                if(cell != null) {
+                    
+                    Creature creature = cell.getOccupant();
+                    
+                    if(creature != null && creature.getType() == type) {
+                        
+                        list.add(creature);
+                    }
+                }
+            }
+        }
+        
+        return list;
+    }
+
+    Iterable<Point> getLocations(int type) {
+        
+        List<Point> list = new ArrayList<>();
+        
+        for(int x = 0; x < cells.length; x++) {
+            for(int y = 0; y < cells[x].length; y++) {
+                
+                Cell cell = cells[x][y];
+                
+                if(cell != null) {
+                    
+                    Creature creature = cell.getOccupant();
+                    
+                    if(creature != null && creature.getType() == type) {
+                        
+                        list.add(new Point(x, y));
+                    }
+                }
+            }
+        }
+        
+        return list;
     }
 }
