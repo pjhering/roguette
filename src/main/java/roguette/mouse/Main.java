@@ -43,7 +43,7 @@ public class Main {
         return new GridBuilder(COLUMNS, ROWS)
                 .createRooms()
                 .createHome()
-                .createMouse()
+                .createMouse(2, 2)
                 .createCats(10)
                 .createCheese(20)
                 .createFluff(9)
@@ -53,7 +53,14 @@ public class Main {
 
     private Game createGame() {
         
-        return new Game();
+        int mouseID = findMouseID(grid);
+        return new Game(mouseID);
+    }
+    
+    private int findMouseID(Grid grid) {
+        
+        Creature c = grid.getCell(2, 2).getOccupant();
+        return c.getId();
     }
     
     private Console createConsole() {

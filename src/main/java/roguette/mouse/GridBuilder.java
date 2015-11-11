@@ -16,7 +16,7 @@ public class GridBuilder {
         return this;//TODO
     }
     
-    GridBuilder createMouse() {
+    GridBuilder createMouse(int column, int row) {
         return this;//TODO
     }
     
