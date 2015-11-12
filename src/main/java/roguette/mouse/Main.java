@@ -1,5 +1,12 @@
 package roguette.mouse;
 
+import java.awt.Dimension;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.io.IOException;
+import javax.swing.JFrame;
+import javax.swing.Timer;
+
 public class Main {
     
     public static final int COLUMNS = 80;
@@ -7,20 +14,23 @@ public class Main {
     
     private Grid grid;
     private final Game game;
-    private final Console console;
-    private final Renderer renderer;
+    private final JFrame frame;
+    private final CodePageConsole console;
+    private final DefaultRenderer renderer;
     private final Timer timer;
+    private int tick;
     
-    Main() {
+    Main() throws IOException {
         
         grid = createGrid();
         game = createGame();
         console = createConsole();
-        renderer = createRenderer(console);
+        frame = createFrame();
+        renderer = createRenderer(console, grid);
         timer = createTimer();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         
         Main main = new Main();
         main.begin();
@@ -29,12 +39,14 @@ public class Main {
     void restart() {
         
         grid = createGrid();
+        tick = 0;
         timer.restart();
     }
     
     private void begin() {
         
-        console.setVisible(true);
+        frame.setVisible(true);
+        renderer.render();
         timer.start();
     }
     
@@ -63,29 +75,45 @@ public class Main {
         return c.getId();
     }
     
-    private Console createConsole() {
+    private CodePageConsole createConsole() throws IOException {
         
         final Main main = this;
-        Console c = new Console(COLUMNS, ROWS, (k) -> {
-            game.keyInput(k, grid, main);
-            renderer.render(grid);
-            console.update();
+        CodePage p = new CodePage("cp437_12x12.png", 16, 16);
+        Dimension d = new Dimension(80, 50);
+        CodePageConsole c = new CodePageConsole(p, d);
+        c.addKeyListener(new KeyAdapter(){
+            @Override
+            public void keyReleased(KeyEvent e) {
+                game.keyInput(e.getKeyCode(), grid, main);
+                renderer.render();
+            }
         });
         
         return c;
     }
     
-    private Renderer createRenderer(Console c) {
+    private JFrame createFrame() {
         
-        return new Renderer(c);
+        JFrame f = new JFrame("Roguette Mouse");
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setContentPane(console);
+        f.pack();
+        f.setResizable(false);
+        
+        return f;
+    }
+    
+    private DefaultRenderer createRenderer(Console c, Grid g) {
+        
+        DefaultRenderer r = new DefaultRenderer(c, g);
+        return r;
     }
     
     private Timer createTimer() {
         
-        Timer t = new Timer(5000, 1000, (tick) -> {
-            game.timerInput(tick, grid);
-            renderer.render(grid);
-            console.update();
+        Timer t = new Timer(5000, (e)->{
+            game.timerInput(tick++, grid);
+            renderer.render();
         });
         
         return t;
