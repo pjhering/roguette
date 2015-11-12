@@ -4,30 +4,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cell implements Types {
-    
-    private final int type;
+
+    private int type;
     private Creature occupant;
     private List<Item> items;
 
-    public Cell(int type) {
-        
+    Cell(int type) {
+
         this.type = type;
         this.items = new ArrayList<>();
     }
 
-    public int getType() {
+    void setType(int type) {
+        this.type = type;
+    }
+
+    int getType() {
         return type;
     }
 
-    public Creature getOccupant() {
+    Creature getOccupant() {
         return occupant;
     }
 
-    public List<Item> getItems() {
+    List<Item> getItems() {
         return items;
     }
 
-    public void setOccupant(Creature occupant) {
+    void setOccupant(Creature occupant) {
         this.occupant = occupant;
     }
 }

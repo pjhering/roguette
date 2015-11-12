@@ -131,9 +131,9 @@ public class Game {
 
                                 items.add(fluff);
                                 this.fluffCount += 1;
-                                
-                                if(fluffCount == 9) {
-                                    
+
+                                if (fluffCount == 9) {
+
                                     this.state = WON;
                                 }
                             }
@@ -143,9 +143,9 @@ public class Game {
 
                     // mouse hits cat
                     mouse.setHealth(mouse.getHealth() - 5.0);
-                    
-                    if(mouse.getHealth() <= 0.0) {
-                        
+
+                    if (mouse.getHealth() <= 0.0) {
+
                         this.state = LOST;
                     }
                 }
@@ -197,48 +197,48 @@ public class Game {
     }
 
     public void timerInput(int tick, Grid grid) {
-        
+
         Point p1 = grid.locateCreature(mouseID);
-        
-        for(Point p2 : grid.getLocations(CAT)) {
-            
+
+        for (Point p2 : grid.getLocations(CAT)) {
+
             double distance = p1.distance(p2);
-            
-            if(distance > 10) {
-                
+
+            if (distance > 10) {
+
                 patrol(grid, p2);
-                
-            } else if(distance > 1) {
-                
+
+            } else if (distance > 1) {
+
                 pursue(grid, p2, p1);
-                
+
             } else {
-                
+
                 attack(grid, p1);
             }
         }
     }
-    
+
     private void patrol(Grid grid, Point cat) {
-        
+
         Point p2 = mover.nextPointFollowRightWall(grid, cat);
         grid.moveOccupant(cat, p2);
     }
-    
+
     private void pursue(Grid grid, Point cat, Point mouse) {
-        
+
         Point p2 = mover.nextPointAStar(grid, cat, mouse);
         grid.moveOccupant(cat, p2);
     }
-    
+
     private void attack(Grid grid, Point mouse) {
-        
+
         Cell cell = grid.getCell(mouse.x, mouse.y);
         Creature m = cell.getOccupant();
         m.setHealth(m.getHealth() - 5);
-        
-        if(m.getHealth() <= 0) {
-            
+
+        if (m.getHealth() <= 0) {
+
             this.state = LOST;
         }
     }

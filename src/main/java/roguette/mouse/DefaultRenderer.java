@@ -128,7 +128,7 @@ public class DefaultRenderer implements Renderer, Types {
                 } else {
                     // else draw item if present
                     List<Item> items = cell.getItems();
-                    Item i = items.isEmpty()?null:items.get(0);
+                    Item i = items.isEmpty() ? null : items.get(0);
                     if (i != null) {
                         Tile t = tiles[i.getType()];
                         console.write(t.getGlyph(), row + rowOffset, col + columnOffset, t.getForeground(), t.getBackground());

@@ -5,24 +5,24 @@ import java.util.List;
 import static java.util.UUID.randomUUID;
 
 public class Creature implements Types {
-    
+
     private final int id;
     private final int type;
     private double health;
     private final List<Item> inventory;
 
     public Creature(int type) {
-        
+
         this.id = randomUUID().hashCode();
         this.type = type;
-        
-        if(type == MOUSE) {
-            
+
+        if (type == MOUSE) {
+
             health = 15;
             inventory = new ArrayList<>();
-            
+
         } else {
-            
+
             this.health = 0;
             this.inventory = null;
         }

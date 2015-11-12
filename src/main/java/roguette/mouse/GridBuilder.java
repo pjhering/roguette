@@ -1,67 +1,126 @@
 package roguette.mouse;
 
+import java.awt.Point;
+
 public class GridBuilder implements Types {
-    
+
     private final int columns, rows;
     private final Grid grid;
 
     public GridBuilder(int columns, int rows) {
-        
+
         this.columns = columns;
         this.rows = rows;
         this.grid = new Grid(columns, rows);
     }
-    
+
     GridBuilder createRooms() {
-        
+
         int[][] map = MapGen.randomRectangularRooms(columns, rows);
-        
-        for(int x = 0; x < columns; x++) {
-            for(int y = 0; y < rows; y++) {
-                
-                switch(map[x][y]) {
-                    
+
+        for (int x = 0; x < columns; x++) {
+            for (int y = 0; y < rows; y++) {
+
+                switch (map[x][y]) {
+
                     case 0:
-                        if(x > 0 && x < 4 && y > 0 && y < 4) {
-                            
+                        if (x > 0 && x < 4 && y > 0 && y < 4) {
+
                             grid.setCell(x, y, new Cell(HOME));
-                            
+
                         } else {
-                            
+
                             grid.setCell(x, y, new Cell(FLOOR));
                         }
                         break;
-                        
+
                     case 1:
                         grid.setCell(x, y, new Cell(WALL));
                         break;
                 }
             }
         }
-        return this;//TODO
+        return this;
     }
-    
+
     GridBuilder createHome() {
-        return this;//TODO
+
+        for (int x = 1; x < 4; x++) {
+            for (int y = 1; y < 4; y++) {
+
+                grid.getCell(x, y).setType(HOME);
+            }
+        }
+
+        return this;
     }
-    
+
     GridBuilder createMouse(int column, int row) {
-        return this;//TODO
+
+        Creature mouse = new Creature(MOUSE);
+        grid.getCell(2, 2).setOccupant(mouse);
+
+        return this;
     }
-    
+
     GridBuilder createCats(int count) {
-        return this;//TODO
+
+        int i = 0;
+
+        while (i < count) {
+
+            Point p = randomPoint(12, 12, columns - 12, rows - 12);
+            Cell cell = grid.getCell(p.x, p.y);
+
+            if (cell.getType() == FLOOR && cell.getOccupant() == null) {
+
+                cell.setOccupant(new Creature(CAT));
+                i += 1;
+            }
+        }
+
+        return this;
     }
-    
+
+    private Point randomPoint(int x1, int y1, int width, int height) {
+
+        int x = (int) (x1 + (Math.random() * width));
+        int y = (int) (y1 + (Math.random() * height));
+
+        return new Point(x, y);
+    }
+
     GridBuilder createCheese(int count) {
-        return this;//TODO
+
+        createItem(count, CHEESE);
+        return this;
     }
-    
+
     GridBuilder createFluff(int count) {
-        return this;//TODO
+
+        createItem(count, FLUFF);
+        return this;
     }
-    
-    Grid build(){
+
+    private void createItem(int count, int type) {
+
+        int i = 0;
+
+        while (i < count) {
+
+            Point p = randomPoint(12, 12, columns - 12, rows - 12);
+            Cell cell = grid.getCell(p.x, p.y);
+
+            if (cell.getType() == FLOOR) {
+
+                cell.getItems().add(new Item(type));
+                i += 1;
+            }
+        }
+    }
+
+    Grid build() {
+
         return grid;
     }
 }

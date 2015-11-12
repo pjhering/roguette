@@ -76,9 +76,12 @@ public class Room {
 
     public boolean isNeighbor(Room that) {
 
-        return this.x1 == that.x2 || // this is right of that
-                this.x2 == that.x1 || // this is left of that
-                this.y1 == that.y2 || // this is below that
+        return this.x1 == that.x2
+                || // this is right of that
+                this.x2 == that.x1
+                || // this is left of that
+                this.y1 == that.y2
+                || // this is below that
                 this.y2 == that.y1;   // this is above that
     }
 

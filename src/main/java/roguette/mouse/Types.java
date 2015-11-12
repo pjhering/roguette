@@ -1,7 +1,7 @@
 package roguette.mouse;
 
 public interface Types {
-    
+
     int WALL = 0;
     int FLOOR = 1;
     int HOME = 2;

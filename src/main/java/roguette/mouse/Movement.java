@@ -6,16 +6,19 @@ public class Movement {
 
     public Movement() {
     }
-    
+
     Point nextPointFollowRightWall(Grid g, Point p1) {
-        return null;
+        
+        return p1;
     }
-    
+
     Point nextPointFollowLeftWall(Grid g, Point p1) {
-        return null;
+        
+        return p1;
     }
-    
+
     Point nextPointAStar(Grid g, Point p1, Point p2) {
-        return null;
+        
+        return p1;
     }
 }
