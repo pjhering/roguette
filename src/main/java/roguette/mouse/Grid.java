@@ -3,6 +3,7 @@ package roguette.mouse;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Grid {
     
@@ -16,7 +17,13 @@ public class Grid {
         this.cells = new Cell[columns][rows];
     }
     
-    public Cell getCell(int column, int row) {
+    void setCell(int column, int row, Cell cell) {
+        
+        cells[column][row] = Objects.requireNonNull(cell);
+    }
+    
+    
+    Cell getCell(int column, int row) {
         
         return cells[column][row];
     }
