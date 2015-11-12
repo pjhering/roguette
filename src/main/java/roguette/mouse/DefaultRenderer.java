@@ -1,6 +1,8 @@
 package roguette.mouse;
 
+import java.awt.Point;
 import static java.lang.Math.*;
+import java.util.List;
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -9,20 +11,24 @@ import static java.util.Objects.requireNonNull;
  *
  * @author tinman
  */
-public class DefaultRenderer implements Renderer {
+public class DefaultRenderer implements Renderer, Types {
 
     private final Console console;
     private final Grid grid;
+    private final int playerID;
+    private final Tile[] tiles;
 
-    public DefaultRenderer(Console console, Grid grid) {
+    public DefaultRenderer(Console console, Grid grid, int playerID, Tile[] tiles) {
 
         this.console = requireNonNull(console);
         this.grid = requireNonNull(grid);
+        this.playerID = playerID;
+        this.tiles = requireNonNull(tiles);
     }
 
     @Override
     public void render() {
-/*
+
         // find the minimum column in both the console and the world
         int consoleMinX = 0;
         int worldMinX = 0;
@@ -31,11 +37,10 @@ public class DefaultRenderer implements Renderer {
         int worldMinY = 0;
 
         // find the player's location
-        Creature player = grid.getPlayer();
-        Location loc = grid.getLocation(player);
+        Point loc = grid.locateCreature(playerID);
 
         // find the width of the world in columns
-        int worldWidth = grid.getWidth(loc.z);
+        int worldWidth = grid.width;
         // find the width of the console in columns
         int consoleWidth = console.getColumns();
 
@@ -53,7 +58,7 @@ public class DefaultRenderer implements Renderer {
         }
 
         // find the height of the world in rows
-        int worldHeight = grid.getHeight(loc.z);
+        int worldHeight = grid.height;
         // find the height of the console in rows
         int consoleHeight = console.getRows();
 
@@ -115,19 +120,21 @@ public class DefaultRenderer implements Renderer {
         for (int col = worldMinX; col < worldMaxX; col++) {
             for (int row = worldMinY; row < worldMaxY; row++) {
                 // draw creature if present
-                Creature c = grid.getCreature(col, row, loc.z);
+                Cell cell = grid.getCell(col, row);
+                Creature c = cell.getOccupant();
                 if (c != null) {
-                    Tile t = c.getTile();
+                    Tile t = tiles[c.getType()];
                     console.write(t.getGlyph(), row + rowOffset, col + columnOffset, t.getForeground(), t.getBackground());
                 } else {
                     // else draw item if present
-                    Item i = grid.getTopItem(col, row, loc.z);
+                    List<Item> items = cell.getItems();
+                    Item i = items.isEmpty()?null:items.get(0);
                     if (i != null) {
-                        Tile t = i.getTile();
+                        Tile t = tiles[i.getType()];
                         console.write(t.getGlyph(), row + rowOffset, col + columnOffset, t.getForeground(), t.getBackground());
                     } else {
                         // else draw tile
-                        Tile t = grid.getTile(col, row, loc.z);
+                        Tile t = tiles[cell.getType()];
                         console.write(t.getGlyph(), row + rowOffset, col + columnOffset, t.getForeground(), t.getBackground());
                     }
                 }
@@ -135,7 +142,6 @@ public class DefaultRenderer implements Renderer {
         }
         // update the console
         console.update();
-*/
     }
 
     public static int min_max(int low, int value, int high) {

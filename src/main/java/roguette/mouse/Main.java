@@ -1,5 +1,6 @@
 package roguette.mouse;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -7,7 +8,7 @@ import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-public class Main {
+public class Main implements Types {
     
     public static final int COLUMNS = 80;
     public static final int ROWS = 50;
@@ -105,8 +106,23 @@ public class Main {
     
     private DefaultRenderer createRenderer(Console c, Grid g) {
         
-        DefaultRenderer r = new DefaultRenderer(c, g);
+        Tile[] tiles = createTiles();
+        DefaultRenderer r = new DefaultRenderer(c, g, game.mouseID, tiles);
         return r;
+    }
+    
+    private Tile[] createTiles() {
+        
+        Tile[] t = new Tile[7];
+        t[WALL] = new Tile('#', Color.DARK_GRAY, Color.BLACK);
+        t[FLOOR] = new Tile(' ', Color.BLACK, Color.BLACK);
+        t[HOME] = new Tile('+', Color.GRAY, Color.BLACK);
+        t[CHEESE] = new Tile('c', Color.YELLOW, Color.BLACK);
+        t[FLUFF] = new Tile('f', Color.LIGHT_GRAY, Color.DARK_GRAY);
+        t[CAT] = new Tile('&', Color.WHITE, Color.BLACK);
+        t[MOUSE] = new Tile('@', Color.RED, Color.BLACK);
+        
+        return t;
     }
     
     private Timer createTimer() {

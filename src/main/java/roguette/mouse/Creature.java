@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import static java.util.UUID.randomUUID;
 
-public class Creature {
-    
-    public static final int MOUSE = 0;
-    public static final int CAT = 1;
+public class Creature implements Types {
     
     private final int id;
     private final int type;

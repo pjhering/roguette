@@ -1,9 +1,6 @@
 package roguette.mouse;
 
-public class Item {
-    
-    public static final int CHEESE = 0;
-    public static final int FLUFF = 1;
+public class Item implements Types {
 
     private final int type;
     

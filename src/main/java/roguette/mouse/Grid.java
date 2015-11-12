@@ -6,10 +6,13 @@ import java.util.List;
 
 public class Grid {
     
+    public final int width, height;
     private final Cell[][] cells;
 
     Grid(int columns, int rows) {
         
+        this.width = columns;
+        this.height = rows;
         this.cells = new Cell[columns][rows];
     }
     

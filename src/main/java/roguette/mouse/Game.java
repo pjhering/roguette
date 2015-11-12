@@ -23,11 +23,11 @@ public class Game {
     public static final int WON = 1;
     public static final int LOST = 2;
 
-    private final int mouseID;
+    public final int mouseID;
     private int state;
     private long keyTime;
     private int fluffCount;
-    private Movement mover;
+    private final Movement mover;
 
     Game(int mouseID) {
 

@@ -3,11 +3,7 @@ package roguette.mouse;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cell {
-    
-    public static final int FLOOR = 0;
-    public static final int HOME = 1;
-    public static final int WALL = 2;
+public class Cell implements Types {
     
     private final int type;
     private Creature occupant;
