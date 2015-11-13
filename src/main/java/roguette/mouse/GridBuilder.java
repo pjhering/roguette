@@ -57,7 +57,7 @@ public class GridBuilder implements Types {
 
     GridBuilder createMouse(int column, int row) {
 
-        Creature mouse = new Creature(MOUSE);
+        Creature mouse = new Mouse();
         grid.getCell(2, 2).setOccupant(mouse);
 
         return this;
@@ -74,7 +74,7 @@ public class GridBuilder implements Types {
 
             if (cell.getType() == FLOOR && cell.getOccupant() == null) {
 
-                cell.setOccupant(new Creature(CAT));
+                cell.setOccupant(new Cat());
                 i += 1;
             }
         }

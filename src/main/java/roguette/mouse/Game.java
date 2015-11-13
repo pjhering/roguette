@@ -99,7 +99,7 @@ public class Game {
         Point p1 = grid.locateCreature(mouseID);
         Point p2 = new Point(p1.x + dx, p1.y + dy);
         Cell c1 = grid.getCell(p1.x, p1.y);
-        Creature mouse = c1.getOccupant();
+        Mouse mouse = (Mouse) c1.getOccupant();
 
         if (grid.isValidCell(p2)) {
         
@@ -108,7 +108,7 @@ public class Game {
 
             if (cType != WALL) {
         
-                Creature cat = c2.getOccupant();
+                Cat cat = (Cat) c2.getOccupant();
 
                 if (cat == null) {
         
@@ -252,7 +252,7 @@ public class Game {
     private void attack(Grid grid, Point mouse) {
 
         Cell cell = grid.getCell(mouse.x, mouse.y);
-        Creature m = cell.getOccupant();
+        Mouse m = (Mouse) cell.getOccupant();
         m.setHealth(m.getHealth() - 5);
 
         if (m.getHealth() <= 0) {
