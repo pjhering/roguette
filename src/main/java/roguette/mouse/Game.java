@@ -12,11 +12,11 @@ import static java.awt.event.KeyEvent.VK_UP;
 import static java.awt.event.KeyEvent.VK_W;
 import static java.lang.System.currentTimeMillis;
 import java.util.List;
-import static roguette.mouse.Cell.FLOOR;
-import static roguette.mouse.Cell.HOME;
-import static roguette.mouse.Creature.CAT;
-import static roguette.mouse.Item.FLUFF;
+import static roguette.mouse.Types.CAT;
 import static roguette.mouse.Types.CHEESE;
+import static roguette.mouse.Types.FLOOR;
+import static roguette.mouse.Types.FLUFF;
+import static roguette.mouse.Types.HOME;
 import static roguette.mouse.Types.WALL;
 
 public class Game {
@@ -96,7 +96,6 @@ public class Game {
 
     private void movePlayer(Grid grid, int dx, int dy) {
 
-        System.out.println("move " + dx + ", " + dy);
         Point p1 = grid.locateCreature(mouseID);
         Point p2 = new Point(p1.x + dx, p1.y + dy);
         Cell c1 = grid.getCell(p1.x, p1.y);
