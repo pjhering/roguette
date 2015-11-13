@@ -6,7 +6,7 @@ public class Movement {
 
     public Movement() {
     }
-
+    
     Point nextPointFollowRightWall(Grid g, Point p1) {
         
         return p1;

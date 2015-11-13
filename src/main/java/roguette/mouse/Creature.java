@@ -1,7 +1,5 @@
 package roguette.mouse;
 
-import java.util.ArrayList;
-import java.util.List;
 import static java.util.UUID.randomUUID;
 
 public class Creature implements Types {
