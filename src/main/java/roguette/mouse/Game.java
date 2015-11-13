@@ -16,6 +16,8 @@ import static roguette.mouse.Cell.FLOOR;
 import static roguette.mouse.Cell.HOME;
 import static roguette.mouse.Creature.CAT;
 import static roguette.mouse.Item.FLUFF;
+import static roguette.mouse.Types.CHEESE;
+import static roguette.mouse.Types.WALL;
 
 public class Game {
 
@@ -94,25 +96,26 @@ public class Game {
 
     private void movePlayer(Grid grid, int dx, int dy) {
 
+        System.out.println("move " + dx + ", " + dy);
         Point p1 = grid.locateCreature(mouseID);
         Point p2 = new Point(p1.x + dx, p1.y + dy);
         Cell c1 = grid.getCell(p1.x, p1.y);
         Creature mouse = c1.getOccupant();
 
         if (grid.isValidCell(p2)) {
-
+        
             Cell c2 = grid.getCell(p2.x, p2.y);
             int cType = c2.getType();
 
-            if (cType == FLOOR || cType == HOME) {
-
+            if (cType != WALL) {
+        
                 Creature cat = c2.getOccupant();
 
                 if (cat == null) {
-
+        
                     grid.moveOccupant(p1, p2);
                     mouse.setHealth(mouse.getHealth() - 0.25);
-
+        
                     if (mouse.getHealth() <= 0.0) {
 
                         this.state = LOST;
@@ -120,15 +123,15 @@ public class Game {
                     }
 
                     if (cType == HOME) {
-
-                        Item fluff = getFluff(mouse.getInventory());
+        
+                        Item fluff = getItem(mouse.getInventory(), FLUFF);
 
                         if (fluff != null) {
-
+        
                             List<Item> items = c2.getItems();
 
-                            if (!containsFluff(items)) {
-
+                            if (!containsItem(items, FLUFF)) {
+        
                                 items.add(fluff);
                                 this.fluffCount += 1;
 
@@ -137,6 +140,22 @@ public class Game {
                                     this.state = WON;
                                 }
                             }
+                        }
+                    } else if(cType == FLOOR) {
+        
+                        List<Item> items = c2.getItems();
+                        
+                        if(containsItem(items, FLUFF)) {
+        
+                            Item fluff = getItem(items, FLUFF);
+                            mouse.getInventory().add(fluff);
+                        }
+                        
+                        if(containsItem(items, CHEESE)) {
+        
+                            Item cheese = getItem(items, CHEESE);
+                            mouse.getInventory().add(cheese);
+                            mouse.setHealth(mouse.getHealth() + 10);
                         }
                     }
                 } else {
@@ -159,36 +178,36 @@ public class Game {
         }
     }
 
-    private Item getFluff(List<Item> list) {
+    private Item getItem(List<Item> list, int type) {
 
-        Item fluff = null;
+        Item item = null;
 
         for (Item i : list) {
 
-            if (i.getType() == FLUFF) {
+            if (i.getType() == type) {
 
-                fluff = i;
+                item = i;
                 break;
             }
         }
 
-        if (fluff != null) {
+        if (item != null) {
 
-            list.remove(fluff);
+            list.remove(item);
         }
 
-        return fluff;
+        return item;
     }
 
-    private boolean containsFluff(List<Item> list) {
+    private boolean containsItem(List<Item> list, int type) {
 
-        boolean flag = true;
+        boolean flag = false;
 
         for (Item i : list) {
 
-            if (i.getType() == FLUFF) {
+            if (i.getType() == type) {
 
-                flag = false;
+                flag = true;
                 break;
             }
         }

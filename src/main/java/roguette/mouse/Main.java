@@ -79,28 +79,28 @@ public class Main implements Types {
 
     private CodePageConsole createConsole() throws IOException {
 
-        final Main main = this;
         CodePage p = new CodePage("/cp437_12x12.png", 16, 16);
         Dimension d = new Dimension(80, 50);
         CodePageConsole c = new CodePageConsole(p, d);
-        c.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                game.keyInput(e.getKeyCode(), grid, main);
-                renderer.render();
-            }
-        });
 
         return c;
     }
 
     private JFrame createFrame() {
 
+        final Main main = this;
         JFrame f = new JFrame("Roguette Mouse");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setContentPane(console);
         f.pack();
         f.setResizable(false);
+        f.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                game.keyInput(e.getKeyCode(), grid, main);
+                renderer.render();
+            }
+        });
 
         return f;
     }
@@ -132,6 +132,8 @@ public class Main implements Types {
             game.timerInput(tick++, grid);
             renderer.render();
         });
+        t.setDelay(750);
+        t.setRepeats(true);
 
         return t;
     }
