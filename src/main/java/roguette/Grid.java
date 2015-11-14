@@ -1,4 +1,4 @@
-package roguette.mouse;
+package roguette;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -10,24 +10,24 @@ public class Grid {
     public final int width, height;
     private final Cell[][] cells;
 
-    Grid(int columns, int rows) {
+    public Grid(int columns, int rows) {
 
         this.width = columns;
         this.height = rows;
         this.cells = new Cell[columns][rows];
     }
 
-    void setCell(int column, int row, Cell cell) {
+    public void setCell(int column, int row, Cell cell) {
 
         cells[column][row] = Objects.requireNonNull(cell);
     }
 
-    Cell getCell(int column, int row) {
+    public Cell getCell(int column, int row) {
 
         return cells[column][row];
     }
 
-    Point locateCreature(int id) {
+    public Point locateCreature(int id) {
 
         for (int x = 0; x < cells.length; x++) {
             for (int y = 0; y < cells[x].length; y++) {
@@ -50,7 +50,7 @@ public class Grid {
         return null;
     }
 
-    boolean isValidCell(Point p) {
+    public boolean isValidCell(Point p) {
 
         return p.x >= 0
                 && p.y >= 0
@@ -58,7 +58,7 @@ public class Grid {
                 && p.y < cells[p.x].length;
     }
 
-    void moveOccupant(Point p1, Point p2) {
+    public void moveOccupant(Point p1, Point p2) {
 
         Creature c1 = cells[p1.x][p1.y].getOccupant();
         Creature c2 = cells[p2.x][p2.y].getOccupant();
@@ -67,7 +67,7 @@ public class Grid {
         cells[p2.x][p2.y].setOccupant(c1);
     }
 
-    List<Item> getItems(Point p) {
+    public List<Item> getItems(Point p) {
 
         Cell c = cells[p.x][p.y];
 
@@ -81,7 +81,7 @@ public class Grid {
         }
     }
 
-    Iterable<Creature> getCreatures(int type) {
+    public Iterable<Creature> getCreatures(int type) {
 
         List<Creature> list = new ArrayList<>();
 
@@ -102,7 +102,7 @@ public class Grid {
         return list;
     }
 
-    Iterable<Point> getLocations(int type) {
+    public Iterable<Point> getLocations(int type) {
 
         List<Point> list = new ArrayList<>();
 

@@ -1,4 +1,4 @@
-package roguette.mouse;
+package roguette;
 
 import java.awt.Color;
 import static java.awt.Color.BLACK;

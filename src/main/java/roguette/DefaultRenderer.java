@@ -1,8 +1,9 @@
-package roguette.mouse;
+package roguette;
 
 import java.awt.Point;
 import static java.lang.Math.*;
 import java.util.List;
+import roguette.mouse.Types;
 import static java.util.Objects.requireNonNull;
 
 /**

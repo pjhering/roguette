@@ -1,4 +1,4 @@
-package roguette.mouse;
+package roguette;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,29 +9,29 @@ public class Cell {
     private Creature occupant;
     private List<Item> items;
 
-    Cell(int type) {
+    public Cell(int type) {
 
         this.type = type;
         this.items = new ArrayList<>();
     }
 
-    void setType(int type) {
+    public void setType(int type) {
         this.type = type;
     }
 
-    int getType() {
+    public int getType() {
         return type;
     }
 
-    Creature getOccupant() {
+    public Creature getOccupant() {
         return occupant;
     }
 
-    List<Item> getItems() {
+    public List<Item> getItems() {
         return items;
     }
 
-    void setOccupant(Creature occupant) {
+    public void setOccupant(Creature occupant) {
         this.occupant = occupant;
     }
 }

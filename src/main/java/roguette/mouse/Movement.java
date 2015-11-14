@@ -1,5 +1,6 @@
 package roguette.mouse;
 
+import roguette.Grid;
 import java.awt.Point;
 import java.util.List;
 

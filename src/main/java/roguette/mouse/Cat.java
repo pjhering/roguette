@@ -1,8 +1,10 @@
 package roguette.mouse;
 
+import roguette.Creature;
 import java.awt.Point;
 import java.util.List;
 import java.util.Random;
+import static roguette.mouse.Types.CAT;
 
 public class Cat extends Creature {
     

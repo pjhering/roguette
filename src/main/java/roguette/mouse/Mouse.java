@@ -1,7 +1,10 @@
 package roguette.mouse;
 
+import roguette.Item;
+import roguette.Creature;
 import java.util.ArrayList;
 import java.util.List;
+import static roguette.mouse.Types.MOUSE;
 
 public class Mouse extends Creature {
 

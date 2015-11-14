@@ -1,4 +1,4 @@
-package roguette.mouse;
+package roguette;
 
 import static java.util.UUID.randomUUID;
 

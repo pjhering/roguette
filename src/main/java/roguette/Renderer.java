@@ -1,4 +1,4 @@
-package roguette.mouse;
+package roguette;
 
 public interface Renderer {
 

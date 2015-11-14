@@ -1,5 +1,8 @@
 package roguette.mouse;
 
+import roguette.Item;
+import roguette.Cell;
+import roguette.Grid;
 import java.awt.Point;
 import static java.awt.event.KeyEvent.VK_A;
 import static java.awt.event.KeyEvent.VK_D;

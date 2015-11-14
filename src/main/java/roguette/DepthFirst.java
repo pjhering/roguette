@@ -1,4 +1,4 @@
-package roguette.mouse;
+package roguette;
 
 import java.awt.Point;
 import java.util.ArrayList;

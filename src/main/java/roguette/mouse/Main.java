@@ -1,5 +1,12 @@
 package roguette.mouse;
 
+import roguette.Tile;
+import roguette.Creature;
+import roguette.CodePage;
+import roguette.Grid;
+import roguette.CodePageConsole;
+import roguette.Console;
+import roguette.DefaultRenderer;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.KeyAdapter;

@@ -1,5 +1,10 @@
 package roguette.mouse;
 
+import roguette.Item;
+import roguette.Creature;
+import roguette.MapGen;
+import roguette.Cell;
+import roguette.Grid;
 import java.awt.Point;
 
 public class GridBuilder implements Types {
