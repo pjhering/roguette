@@ -1,6 +1,7 @@
 package roguette.mouse;
 
 import java.awt.Point;
+import java.util.List;
 
 public class Movement {
 
@@ -17,8 +18,8 @@ public class Movement {
         return p1;
     }
 
-    Point nextPointAStar(Grid g, Point p1, Point p2) {
+    List<Point> aStarSearch(Grid g, Point p1, Point p2) {
         
-        return p1;
+        return null;
     }
 }

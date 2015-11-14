@@ -3,7 +3,7 @@ package roguette.mouse;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cell implements Types {
+public class Cell {
 
     private int type;
     private Creature occupant;

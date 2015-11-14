@@ -2,7 +2,7 @@ package roguette.mouse;
 
 import static java.util.UUID.randomUUID;
 
-public class Creature implements Types {
+public class Creature {
 
     private final int id;
     private final int type;

@@ -245,7 +245,19 @@ public class Game {
 
     private void pursue(Grid grid, Point cat, Point mouse) {
 
-        Point p2 = mover.nextPointAStar(grid, cat, mouse);
+        Cell cell = grid.getCell(cat.x, cat.y);
+        Cat cat2 = (Cat) cell.getOccupant();
+        
+        if(cat2.getMouse() == null || !cat2.getMouse().equals(mouse)) {
+            
+            cat2.setMouse(mouse);
+            cat2.setAstar(mover.aStarSearch(grid, cat, mouse));
+        }
+        
+        int i = cat2.getAstar().size() - 2;
+        Point p2 = cat2.getAstar().get(i);
+        cat2.getAstar().remove(i);
+        
         grid.moveOccupant(cat, p2);
     }
 

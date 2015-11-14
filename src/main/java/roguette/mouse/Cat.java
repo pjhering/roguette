@@ -1,5 +1,7 @@
 package roguette.mouse;
 
+import java.awt.Point;
+import java.util.List;
 import java.util.Random;
 
 public class Cat extends Creature {
@@ -21,6 +23,8 @@ public class Cat extends Creature {
     private int direction;
     private int state;
     private final int side;
+    private List<Point> astar;
+    private Point mouse;
 
     public Cat() {
         
@@ -48,5 +52,21 @@ public class Cat extends Creature {
 
     public int getSide() {
         return side;
+    }
+
+    public List<Point> getAstar() {
+        return astar;
+    }
+
+    public Point getMouse() {
+        return mouse;
+    }
+
+    public void setAstar(List<Point> astar) {
+        this.astar = astar;
+    }
+
+    public void setMouse(Point mouse) {
+        this.mouse = mouse;
     }
 }

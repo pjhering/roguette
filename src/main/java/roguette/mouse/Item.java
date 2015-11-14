@@ -1,6 +1,6 @@
 package roguette.mouse;
 
-public class Item implements Types {
+public class Item {
 
     private final int type;
 
