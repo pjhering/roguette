@@ -17,11 +17,13 @@ import javax.swing.Timer;
 
 public class Main implements Types {
 
-    public static final int COLUMNS = 80;
-    public static final int ROWS = 50;
+    public static final int COLUMNS = 85;
+    public static final int ROWS = 85;
 
+    private final String status;
     private Grid grid;
     private final Game game;
+    private Mouse mouse;
     private final JFrame frame;
     private final CodePageConsole console;
     private final DefaultRenderer renderer;
@@ -30,6 +32,7 @@ public class Main implements Types {
 
     Main() throws IOException {
 
+        status = "HEALTH: %3.2f   FLUFF COLLECTED: %d   FLUFF DEPOSITED: %d";
         grid = createGrid();
         game = createGame();
         console = createConsole();
@@ -56,12 +59,13 @@ public class Main implements Types {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         renderer.render();
+        status();
         timer.start();
     }
 
     private Grid createGrid() {
 
-        return new GridBuilder(COLUMNS, ROWS)
+        Grid g = new GridBuilder(COLUMNS, ROWS)
                 .createRooms()
                 .createHome()
                 .createMouse(2, 2)
@@ -69,7 +73,10 @@ public class Main implements Types {
                 .createCheese(20)
                 .createFluff(9)
                 .build();
-
+        
+        mouse = (Mouse) g.getCell(2, 2).getOccupant();
+        
+        return g;
     }
 
     private Game createGame() {
@@ -87,7 +94,7 @@ public class Main implements Types {
     private CodePageConsole createConsole() throws IOException {
 
         CodePage p = new CodePage("/cp437_12x12.png", 16, 16);
-        Dimension d = new Dimension(80, 50);
+        Dimension d = new Dimension(60, 40);
         CodePageConsole c = new CodePageConsole(p, d);
 
         return c;
@@ -106,6 +113,7 @@ public class Main implements Types {
             public void keyReleased(KeyEvent e) {
                 game.keyInput(e.getKeyCode(), grid, main);
                 renderer.render();
+                status();
             }
         });
 
@@ -138,10 +146,17 @@ public class Main implements Types {
         Timer t = new Timer(5000, (e) -> {
             game.timerInput(tick++, grid);
             renderer.render();
+            status();
         });
         t.setDelay(750);
         t.setRepeats(true);
 
         return t;
+    }
+    
+    private void status() {
+        
+        console.center(String.format(status, mouse.getHealth(), 0, 0), 39, Color.YELLOW, Color.BLACK);
+        console.update();
     }
 }
