@@ -32,14 +32,14 @@ public class Game {
     private int state;
     private long keyTime;
     private int fluffCount;
-    private final Movement mover;
+    private final CatMovement mover;
 
     Game(int mouseID) {
 
         this.mouseID = mouseID;
         state = PLAY;
         keyTime = currentTimeMillis();
-        mover = new Movement();
+        mover = new CatMovement();
     }
 
     private void reset(Main main) {
@@ -226,53 +226,17 @@ public class Game {
             double distance = p1.distance(p2);
 
             if (distance > 10) {
-
-                patrol(grid, p2);
-
+                
+                this.mover.patrolRooms(grid, p2);
+                
             } else if (distance > 1) {
-
-                pursue(grid, p2, p1);
-
+                
+                this.mover.pursueMouse(grid, p2);
+                
             } else {
-
-                attack(grid, p1);
+                
+                this.mover.attackMouse(grid, p2);
             }
-        }
-    }
-
-    private void patrol(Grid grid, Point cat) {
-
-        Point p2 = mover.nextPointFollowRightWall(grid, cat);
-        grid.moveOccupant(cat, p2);
-    }
-
-    private void pursue(Grid grid, Point cat, Point mouse) {
-
-        Cell cell = grid.getCell(cat.x, cat.y);
-        Cat cat2 = (Cat) cell.getOccupant();
-        
-        if(cat2.getMouse() == null || !cat2.getMouse().equals(mouse)) {
-            
-            cat2.setMouse(mouse);
-            cat2.setAstar(mover.aStarSearch(grid, cat, mouse));
-        }
-        
-        int i = cat2.getAstar().size() - 2;
-        Point p2 = cat2.getAstar().get(i);
-        cat2.getAstar().remove(i);
-        
-        grid.moveOccupant(cat, p2);
-    }
-
-    private void attack(Grid grid, Point mouse) {
-
-        Cell cell = grid.getCell(mouse.x, mouse.y);
-        Mouse m = (Mouse) cell.getOccupant();
-        m.setHealth(m.getHealth() - 5);
-
-        if (m.getHealth() <= 0) {
-
-            this.state = LOST;
         }
     }
 }
