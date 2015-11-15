@@ -144,7 +144,14 @@ public class Main {
         Timer t = new Timer(5000, (e) -> {
             game.timerInput(tick++, grid);
             renderer.render();
-            status();
+            if(game.getState() == WON) {
+                youWin();
+            } else if(game.getState() == LOST) {
+                youLose();
+            } else {
+                status();
+            }
+            
         });
         t.setDelay(750);
         t.setRepeats(true);
@@ -152,9 +159,27 @@ public class Main {
         return t;
     }
     
+    private void youLose() {
+        
+        for(int i = 0; i < YOU_LOSE.length; i++) {
+            
+            console.center(YOU_LOSE[i], i + 10, Color.RED, Color.ORANGE);
+        }
+        console.update();
+    }
+    
+    private void youWin() {
+        
+        for(int i = 0; i < YOU_WIN.length; i++) {
+            
+            console.center(YOU_WIN[i], i + 10, Color.GREEN, Color.ORANGE);
+        }
+        console.update();
+    }
+    
     private void status() {
         
-        console.center(String.format(status, mouse.getHealth(), 0, 0), 39, Color.YELLOW, Color.BLACK);
+        console.center(String.format(status, mouse.getHealth(), mouse.countFluff(), mouse.countDeposited()), 39, Color.YELLOW, Color.BLACK);
         console.update();
     }
 }

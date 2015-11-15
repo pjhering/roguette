@@ -42,6 +42,8 @@ public class Game {
     }
 
     public void keyInput(int key, Grid grid, Main main) {
+        
+        if(state != PLAY) return;
 
         long now = currentTimeMillis();
 
@@ -96,19 +98,19 @@ public class Game {
         Mouse mouse = (Mouse) c1.getOccupant();
 
         if (grid.isValidCell(p2)) {
-        
+
             Cell c2 = grid.getCell(p2.x, p2.y);
             int cType = c2.getType();
 
             if (cType != WALL) {
-        
+
                 Cat cat = (Cat) c2.getOccupant();
 
                 if (cat == null) {
-        
+
                     grid.moveOccupant(p1, p2);
                     mouse.setHealth(mouse.getHealth() - 0.25);
-        
+
                     if (mouse.getHealth() <= 0.0) {
 
                         this.state = LOST;
@@ -116,36 +118,39 @@ public class Game {
                     }
 
                     if (cType == HOME) {
-        
-                        Item fluff = getItem(mouse.getInventory(), FLUFF);
 
-                        if (fluff != null) {
-        
+                        if (containsItem(mouse.getInventory(), FLUFF)) {
+
                             List<Item> items = c2.getItems();
 
                             if (!containsItem(items, FLUFF)) {
-        
-                                items.add(fluff);
-                                this.fluffCount += 1;
 
-                                if (fluffCount == 9) {
+                                Item fluff = getItem(mouse.getInventory(), FLUFF);
 
-                                    this.state = WON;
+                                if (fluff != null) {
+                                    
+                                    items.add(fluff);
+                                    mouse.deposit();
+                                    
+                                    if(mouse.countDeposited() == 9) {
+                                        
+                                        this.state = WON;
+                                    }
                                 }
                             }
                         }
-                    } else if(cType == FLOOR) {
-        
+                    } else if (cType == FLOOR) {
+
                         List<Item> items = c2.getItems();
-                        
-                        if(containsItem(items, FLUFF)) {
-        
+
+                        if (containsItem(items, FLUFF)) {
+
                             Item fluff = getItem(items, FLUFF);
                             mouse.getInventory().add(fluff);
                         }
-                        
-                        if(containsItem(items, CHEESE)) {
-        
+
+                        if (containsItem(items, CHEESE)) {
+
                             Item cheese = getItem(items, CHEESE);
                             mouse.getInventory().add(cheese);
                             mouse.setHealth(mouse.getHealth() + 10);
@@ -209,6 +214,8 @@ public class Game {
     }
 
     public void timerInput(int tick, Grid grid) {
+        
+        if(state != PLAY) return;
 
         Point p1 = grid.locateCreature(mouseID);
 
@@ -217,17 +224,22 @@ public class Game {
             double distance = p1.distance(p2);
 
             if (distance > 10) {
-                
+
                 this.mover.patrolRooms(grid, p2);
-                
+
             } else if (distance > 1) {
-                
+
                 this.mover.pursueMouse(grid, p2);
-                
+
             } else {
-                
+
                 this.mover.attackMouse(grid, p2);
             }
         }
+    }
+
+    int getState() {
+        
+        return this.state;
     }
 }

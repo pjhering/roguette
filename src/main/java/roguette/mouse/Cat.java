@@ -4,7 +4,7 @@ import roguette.Creature;
 import java.awt.Point;
 import java.util.List;
 import static roguette.mouse.Const.CAT;
-import static roguette.mouse.Const.PATROLLING;
+import static roguette.mouse.Const.SEEKING_WALL;
 import static roguette.mouse.Const.RANDOM;
 
 public class Cat extends Creature {
@@ -19,7 +19,7 @@ public class Cat extends Creature {
         
         super(CAT);
         this.direction = RANDOM.nextInt(4);
-        this.state = PATROLLING;
+        this.state = SEEKING_WALL;
         this.side = RANDOM.nextInt(2);
     }
 

@@ -19,17 +19,39 @@ public interface Const {
     int CAT = 5;
     int MOUSE = 6;
     
-    int PATROLLING = 0;
-    int PURSUING = 1;
-    int ATTACKING = 2;
+    int SEEKING_WALL = 0;
+    int FOLLOWING_WALL = 1;
+    int PURSUING = 2;
+    int ATTACKING = 3;
     
     int NORTH = 0;
-    int WEST = 1;
+    int WEST  = 1;
     int SOUTH = 2;
-    int EAST = 3;
+    int EAST  = 3;
     
-    int RIGHT = 0;
-    int LEFT = 1;
+    int RIGHT    = 1;
+    int FORWARD = 0;
+    int LEFT     = -1;
     
     Random RANDOM = new Random();
+    
+    String[] YOU_WIN = new String[]{
+        "                                        ",
+        "#   #  ###  #   #   #   #  ### #   #   #",
+        " # #  #   # #   #   #   #   #  ##  #   #",
+        "  #   #   # #   #   # # #   #  # # #   #",
+        "  #   #   # #   #   # # #   #  #  ##    ",
+        "  #    ###   ###    ## ##  ### #   #   #",
+        "                                        "
+    };
+    
+    String[] YOU_LOSE = new String[]{
+        "                                               ",
+        "#   #  ###  #   #   #      ###   #### #####   #",
+        " # #  #   # #   #   #     #   # #     #       #",
+        "  #   #   # #   #   #     #   #  ###  ###     #",
+        "  #   #   # #   #   #     #   #     # #        ",
+        "  #    ###   ###    #####  ###  ####  #####   #",
+        "                                               "
+    };
 }
