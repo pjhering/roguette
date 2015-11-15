@@ -15,18 +15,9 @@ import static java.awt.event.KeyEvent.VK_UP;
 import static java.awt.event.KeyEvent.VK_W;
 import static java.lang.System.currentTimeMillis;
 import java.util.List;
-import static roguette.mouse.Types.CAT;
-import static roguette.mouse.Types.CHEESE;
-import static roguette.mouse.Types.FLOOR;
-import static roguette.mouse.Types.FLUFF;
-import static roguette.mouse.Types.HOME;
-import static roguette.mouse.Types.WALL;
+import static roguette.mouse.Const.*;
 
 public class Game {
-
-    public static final int PLAY = 0;
-    public static final int WON = 1;
-    public static final int LOST = 2;
 
     public final int mouseID;
     private int state;

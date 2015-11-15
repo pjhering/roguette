@@ -7,6 +7,7 @@ import roguette.Grid;
 import roguette.CodePageConsole;
 import roguette.Console;
 import roguette.DefaultRenderer;
+import static roguette.mouse.Const.*;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
@@ -15,10 +16,7 @@ import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-public class Main implements Types {
-
-    public static final int COLUMNS = 85;
-    public static final int ROWS = 85;
+public class Main {
 
     private final String status;
     private Grid grid;

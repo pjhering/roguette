@@ -7,7 +7,7 @@ import roguette.Cell;
 import roguette.Grid;
 import java.awt.Point;
 
-public class GridBuilder implements Types {
+public class GridBuilder implements Const {
 
     private final int columns, rows;
     private final Grid grid;

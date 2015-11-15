@@ -4,7 +4,7 @@ import roguette.Item;
 import roguette.Creature;
 import java.util.ArrayList;
 import java.util.List;
-import static roguette.mouse.Types.MOUSE;
+import static roguette.mouse.Const.MOUSE;
 
 public class Mouse extends Creature {
 

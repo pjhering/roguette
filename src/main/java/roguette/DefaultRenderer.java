@@ -3,7 +3,7 @@ package roguette;
 import java.awt.Point;
 import static java.lang.Math.*;
 import java.util.List;
-import roguette.mouse.Types;
+import roguette.mouse.Const;
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -12,7 +12,7 @@ import static java.util.Objects.requireNonNull;
  *
  * @author tinman
  */
-public class DefaultRenderer implements Renderer, Types {
+public class DefaultRenderer implements Renderer, Const {
 
     private final Console console;
     private final Grid grid;
