@@ -43,8 +43,6 @@ public class Game {
 
     public void keyInput(int key, Grid grid, Main main) {
         
-        if(state != PLAY) return;
-
         long now = currentTimeMillis();
 
         if (now - keyTime > 250) {
@@ -215,8 +213,6 @@ public class Game {
 
     public void timerInput(int tick, Grid grid) {
         
-        if(state != PLAY) return;
-
         Point p1 = grid.locateCreature(mouseID);
 
         for (Point p2 : grid.getLocations(CAT)) {

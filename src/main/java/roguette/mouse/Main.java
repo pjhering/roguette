@@ -71,9 +71,9 @@ public class Main {
                 .createCheese(20)
                 .createFluff(9)
                 .build();
-        
+
         mouse = (Mouse) g.getCell(2, 2).getOccupant();
-        
+
         return g;
     }
 
@@ -109,9 +109,20 @@ public class Main {
         f.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                game.keyInput(e.getKeyCode(), grid, main);
-                renderer.render();
-                status();
+                
+                switch (game.getState()) {
+                case WON:
+                    youWin();
+                    break;
+                case LOST:
+                    youLose();
+                    break;
+                default:
+                    game.keyInput(e.getKeyCode(), grid, main);
+                    renderer.render();
+                    status();
+                    break;
+                }
             }
         });
 
@@ -142,43 +153,47 @@ public class Main {
     private Timer createTimer() {
 
         Timer t = new Timer(5000, (e) -> {
-            game.timerInput(tick++, grid);
-            renderer.render();
-            if(game.getState() == WON) {
-                youWin();
-            } else if(game.getState() == LOST) {
-                youLose();
-            } else {
-                status();
-            }
             
+            switch (game.getState()) {
+                case WON:
+                    youWin();
+                    break;
+                case LOST:
+                    youLose();
+                    break;
+                default:
+                    game.timerInput(tick++, grid);
+                    renderer.render();
+                    status();
+                    break;
+            }
         });
         t.setDelay(750);
         t.setRepeats(true);
 
         return t;
     }
-    
+
     private void youLose() {
-        
-        for(int i = 0; i < YOU_LOSE.length; i++) {
-            
+
+        for (int i = 0; i < YOU_LOSE.length; i++) {
+
             console.center(YOU_LOSE[i], i + 10, Color.RED, Color.ORANGE);
         }
         console.update();
     }
-    
+
     private void youWin() {
-        
-        for(int i = 0; i < YOU_WIN.length; i++) {
-            
+
+        for (int i = 0; i < YOU_WIN.length; i++) {
+
             console.center(YOU_WIN[i], i + 10, Color.GREEN, Color.ORANGE);
         }
         console.update();
     }
-    
+
     private void status() {
-        
+
         console.center(String.format(status, mouse.getHealth(), mouse.countFluff(), mouse.countDeposited()), 39, Color.YELLOW, Color.BLACK);
         console.update();
     }
