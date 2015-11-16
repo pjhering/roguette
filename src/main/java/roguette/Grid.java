@@ -24,6 +24,16 @@ public class Grid {
 
     public Cell getCell(int column, int row) {
 
+        if (column < 0 || column >= width) {
+            
+            return null;
+        }
+
+        if (row < 0 || row >= height) {
+            
+            return null;
+        }
+
         return cells[column][row];
     }
 
@@ -59,6 +69,16 @@ public class Grid {
     }
 
     public void moveOccupant(Point p1, Point p2) {
+        
+        if(p1.x < 0 || p1.y < 0 || p2.x < 0 || p2.y < 0) {
+            
+            return;
+        }
+        
+        if(p1.x >= width || p1.y >= height || p2.x >= width || p2.y >= height) {
+            
+            return;
+        }
 
         Creature c1 = cells[p1.x][p1.y].getOccupant();
         Creature c2 = cells[p2.x][p2.y].getOccupant();

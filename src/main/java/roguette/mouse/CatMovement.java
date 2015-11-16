@@ -32,10 +32,93 @@ public class CatMovement {
     void patrolRooms(Grid grid, Point p) {
         
         Cat cat = (Cat) grid.getCell(p.x, p.y).getOccupant();
+        int facing = cat.getDirection();
         
+        Point f = direction(p, facing, FORWARD);
+        Cell forward = grid.getCell(f.x, f.y);
+        
+        Point l = direction(p, facing, LEFT);
+        Cell left = grid.getCell(l.x, l.y);
+        
+        switch(cat.getState()) {
+            
+            case SEEKING_WALL:
+                if(isBlocked(left)) {
+                    
+                    cat.setState(FOLLOWING_WALL);
+                    patrolRooms(grid, p);
+                    
+                } else if(isBlocked(forward)) {
+                    
+                    int dir = turn(facing, RIGHT);
+                    cat.setDirection(dir);
+                    cat.setState(FOLLOWING_WALL);
+                    patrolRooms(grid, p);
+                    
+                } else {
+                    
+                    grid.moveOccupant(p, f);
+                }
+                break;
+                
+            case FOLLOWING_WALL:
+                if(isBlocked(forward)) {
+                    
+                    int dir = turn(facing, RIGHT);
+                    cat.setDirection(dir);
+                    
+                } else if(isBlocked(left)) {
+                    
+                    grid.moveOccupant(p, f);
+                    
+                } else {
+                    
+                    int dir = turn(facing, LEFT);
+                    cat.setDirection(dir);
+                    cat.setState(SEEKING_WALL);
+                }
+                break;
+        }
+    }
+    
+    private int turn(int facing, int direction) {
+        
+        switch(facing) {
+            
+            case NORTH:
+                if(direction == LEFT) return WEST;
+                if(direction == RIGHT) return EAST;
+                if(direction == FORWARD) return NORTH;
+                return SOUTH;
+                
+            case SOUTH:
+                if(direction == LEFT) return EAST;
+                if(direction == RIGHT) return WEST;
+                if(direction == FORWARD) return SOUTH;
+                return NORTH;
+                
+            case WEST:
+                if(direction == LEFT) return SOUTH;
+                if(direction == RIGHT) return NORTH;
+                if(direction == FORWARD) return WEST;
+                return EAST;
+                
+            case EAST:
+                if(direction == LEFT) return NORTH;
+                if(direction == RIGHT) return SOUTH;
+                if(direction == FORWARD) return EAST;
+                return WEST;
+        }
+        
+        return facing;
     }
     
     private boolean isBlocked(Cell cell) {
+        
+        if(cell == null) {
+            
+            return true;
+        }
         
         int type = cell.getType();
         
