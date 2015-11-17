@@ -178,7 +178,7 @@ public class Main {
 
         for (int i = 0; i < YOU_LOSE.length; i++) {
 
-            console.center(YOU_LOSE[i], i + 10, Color.RED, Color.ORANGE);
+            console.center(YOU_LOSE[i], i + 10, Color.RED, Color.BLACK);
         }
         console.update();
     }
@@ -187,7 +187,7 @@ public class Main {
 
         for (int i = 0; i < YOU_WIN.length; i++) {
 
-            console.center(YOU_WIN[i], i + 10, Color.GREEN, Color.ORANGE);
+            console.center(YOU_WIN[i], i + 10, Color.GREEN, Color.BLACK);
         }
         console.update();
     }
