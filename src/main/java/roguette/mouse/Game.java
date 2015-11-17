@@ -225,11 +225,11 @@ public class Game {
 
             } else if (distance > 1) {
 
-                this.mover.pursueMouse(grid, p2);
+                this.mover.pursueMouse(grid, p1, p2);
 
             } else {
 
-                this.mover.attackMouse(grid, p2);
+                this.mover.attackMouse(grid, p1);
             }
         }
     }

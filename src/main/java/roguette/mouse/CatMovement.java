@@ -2,33 +2,18 @@ package roguette.mouse;
 
 import roguette.Grid;
 import java.awt.Point;
+import java.util.List;
 import roguette.Cell;
+import roguette.DepthFirst;
+import roguette.Search;
+import roguette.SearchSpace;
 import static roguette.mouse.Const.*;
 
 public class CatMovement {
     
-    /*
-    wall following algorithm
+    private SearchSpace<Point> space;
+    private Search<Point> search;
     
-    SEEKING:
-    if left tile is blocked
-       enter FOLLOWING state
-    else if forward tile is blocked
-       turn right
-       enter FOLLOWING state
-    else 
-       move forward
-    
-    FOLLOWING:
-    if forward tile is blocked
-       turn right
-       move forward
-    else if left tile is blocked
-       move forward
-    else
-       turn left
-       move forward
-    */
     void patrolRooms(Grid grid, Point p) {
         
         Cat cat = (Cat) grid.getCell(p.x, p.y).getOccupant();
@@ -162,7 +147,21 @@ public class CatMovement {
         return p;
     }
     
-    void pursueMouse(Grid grid, Point p) {}
+    void pursueMouse(Grid grid, Point mouse, Point cat) {
+        
+        if(space == null) {
+            
+            space = new GridSearchSpace(grid);
+            search = new DepthFirst<>(space);
+        }
+        
+        List<Point> path = search.getPath(cat);
+        
+        if(path.size() > 1) {
+            
+            grid.moveOccupant(cat, path.get(1));
+        }
+    }
     
-    void attackMouse(Grid grid, Point p) {}
+    void attackMouse(Grid grid, Point mousePoint) {}
 }

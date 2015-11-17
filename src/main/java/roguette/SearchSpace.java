@@ -11,6 +11,4 @@ public interface SearchSpace<T> {
     double getEstimate(T from, T to);
     
     boolean isGoal(T node);
-
-    public T getOrigin();
 }
