@@ -12,11 +12,16 @@ public class DepthFirst<T> implements Search<T> {
 
     private final SearchSpace search;
     private Node<T> root;
-    private final Comparator<Node<T>> deepest = (Node<T> o1, Node<T> o2) -> o1.depth() - o2.depth();
+    private final Comparator<Node<T>> deepest = (Node<T> n1, Node<T> n2) -> n1.depth() - n2.depth();
 
     public DepthFirst(SearchSpace search) {
 
         this.search = requireNonNull(search);
+    }
+    
+    public Node<T> getRoot() {
+        
+        return root;
     }
 
     @Override
