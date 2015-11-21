@@ -54,7 +54,7 @@ public class CatGraph implements Graph<Point> {
             Cell cell = grid.getCell(p.x, p.y);
             Creature c = cell.getOccupant();
             
-            return c == null;
+            return c == null || c.getType() == Const.MOUSE;
             
         } else {
             

@@ -158,12 +158,16 @@ public class CatMovement {
         if(goal != null) {
             
             List<Point> path = buildPath(goal);
-            System.out.println(path.size());
             
             if(path.size() >= 2) {
                 
-                grid.moveOccupant(cat, path.get(1));
+                int i = path.size() - 2;
+                Point next = path.get(i);
+                grid.moveOccupant(cat, next);
             }
+        } else {
+            
+            System.out.print("can't find the mouse?");
         }
     }
     
