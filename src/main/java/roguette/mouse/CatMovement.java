@@ -2,17 +2,16 @@ package roguette.mouse;
 
 import roguette.Grid;
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
+import roguette.AStar;
 import roguette.Cell;
-import roguette.DepthFirst;
-import roguette.Search;
-import roguette.SearchSpace;
+import roguette.Vertex;
 import static roguette.mouse.Const.*;
 
 public class CatMovement {
     
-    private SearchSpace<Point> space;
-    private Search<Point> search;
+    private AStar<Point> astar;
     
     void patrolRooms(Grid grid, Point p) {
         
@@ -149,19 +148,42 @@ public class CatMovement {
     
     void pursueMouse(Grid grid, Point mouse, Point cat) {
         
-        if(space == null) {
+        if(astar == null) {
             
-            space = new GridSearchSpace(grid);
-            search = new DepthFirst<>(space);
+            astar = new CatAStar(grid);
         }
         
-        List<Point> path = search.getPath(cat);
+        Vertex<Point> goal = astar.search(new Vertex(null, cat));
         
-        if(path.size() > 1) {
+        if(goal != null) {
             
-            grid.moveOccupant(cat, path.get(1));
+            List<Point> path = buildPath(goal);
+            System.out.println(path.size());
+            
+            if(path.size() >= 2) {
+                
+                grid.moveOccupant(cat, path.get(1));
+            }
         }
     }
     
-    void attackMouse(Grid grid, Point mousePoint) {}
+    private List<Point> buildPath(Vertex<Point> goal) {
+        
+        List<Point> path = new ArrayList<>();
+        
+        while(goal != null) {
+            
+            path.add(goal.getValue());
+            goal = goal.getParent();
+        }
+        
+        return path;
+    }
+    
+    void attackMouse(Grid grid, Point p) {
+        
+        Cell cell = grid.getCell(p.x, p.y);
+        Mouse mouse = (Mouse) cell.getOccupant();
+        mouse.setHealth(mouse.getHealth() - 5.0);
+    }
 }
