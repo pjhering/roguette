@@ -1,140 +1,182 @@
 package roguette;
 
-import static java.lang.Math.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Room {
+    
+    public final int top, left, bottom, right;
+    private final int hash;
+    private boolean north, south, west, east;
 
-    private final int x1;
-    private final int y1;
-    private final int x2;
-    private final int y2;
-    private final List<int[]> doors;
-
-    public Room(int x1, int y1, int x2, int y2) {
-
-        this.x1 = x1;
-        this.y1 = y1;
-        this.x2 = x2;
-        this.y2 = y2;
-        this.doors = new ArrayList<>();
+    public Room(int top, int left, int bottom, int right) {
+        
+        this.top = top;
+        this.bottom = bottom;
+        this.left = left;
+        this.right = right;
+        
+        if(top < 0 || left < 0) throw new RuntimeException("negative room coordinate");
+        if(top >= bottom || left >= right) throw new RuntimeException("illegal room definition");
+        if(bottom - top < 5 || right - left < 5) throw new RuntimeException("room too small");
+        
+        int n = 7;
+        n = 13 * n + this.top;
+        n = 13 * n + this.left;
+        n = 13 * n + this.bottom;
+        hash = 13 * n + this.right;
     }
-
+    
+    public void doors(int[][] map) {
+        
+        int midX = left + ((right - left) / 2);
+        int midY = top + ((bottom - top) / 2);
+        
+        if(north) map[midX][top] = 0;
+        
+        if(south) map[midX][bottom] = 0;
+        
+        if(west) map[left][midY] = 0;
+        
+        if(east) map[right][midY] = 0;
+    }
+    
+    public void walls(int[][] map) {
+        
+        for(int y = top; y <= bottom; y++) {
+            for(int x = left; x <= right; x++) {
+                
+                if(x == left || x == right || y == top || y == bottom) {
+                    
+                    map[x][y] = 1;
+                    
+                } else {
+                    
+                    map[x][y] = 0;
+                }
+            }
+        }
+    }
+    
     public int width() {
-
-        return x2 - x1;
+        
+        return right - left;
     }
-
+    
     public int height() {
-
-        return y2 - y1;
+        
+        return bottom - top;
     }
-
-    public List<int[]> doors() {
-
-        return doors;
+    
+    public boolean isAdjacentNorth(Room that) {
+        
+        return this.bottom == that.top &&
+                this.left < that.right &&
+                this.right > that.left;
     }
-
-    public static List<Room> getTopBottomSplit(Room room) {
-
+    
+    public boolean isAdjacentSouth(Room that) {
+        
+        return this.top == that.bottom &&
+                this.left < that.right &&
+                this.right > that.left;
+    }
+    
+    public boolean isAdjacentWest(Room that) {
+        
+        return this.right == that.left &&
+                this.top < that.bottom &&
+                this.bottom > that.top;
+    }
+    
+    public boolean isAdjacentEast(Room that) {
+        
+        return this.left == that.right &&
+                this.top < that.bottom &&
+                this.bottom > that.top;
+    }
+    
+    public List<Room> hSplit() {
+        
+        int middle = top + ((bottom - top) / 2);
+        
         List<Room> list = new ArrayList<>();
-        int length = room.y2 - room.y1;
-
-        if (length > 8) {
-
-            int newY = room.y1 + (length / 2);
-
-            Room a = new Room(room.x1, newY, room.x2, room.y2);
-            Room b = new Room(room.x1, room.y1, room.x2, newY);
-
-            list.add(a);
-            list.add(b);
-        }
-
+        list.add(new Room(top, left, middle, right));
+        list.add(new Room(middle, left, bottom, right));
+        
+        return list;
+    }
+    
+    public List<Room> vSplit() {
+        
+        int middle = left + ((right - left) / 2);
+        
+        List<Room> list = new ArrayList<>();
+        list.add(new Room(top, left, bottom, middle));
+        list.add(new Room(top, middle, bottom, right));
+        
         return list;
     }
 
-    public static List<Room> getLeftRightSplit(Room room) {
-
-        List<Room> list = new ArrayList<>();
-        int length = room.x2 - room.x1;
-
-        if (length > 8) {
-
-            int newX = room.x1 + (length / 2);
-
-            Room a = new Room(room.x1, room.y1, newX, room.y2);
-            Room b = new Room(newX, room.y1, room.x2, room.y2);
-
-            list.add(a);
-            list.add(b);
-        }
-
-        return list;
+    public void setNorth(boolean north) {
+        this.north = north;
     }
 
-    public boolean isNeighbor(Room that) {
-
-        return this.x1 == that.x2
-                || // this is right of that
-                this.x2 == that.x1
-                || // this is left of that
-                this.y1 == that.y2
-                || // this is below that
-                this.y2 == that.y1;   // this is above that
+    public void setSouth(boolean south) {
+        this.south = south;
     }
 
-    public void draw(int[][] map) {
-
-        for (int x = x1; x <= x2; x++) {
-            for (int y = y1; y <= y2; y++) {
-
-                map[x][y] = (x == x1 || x == x2 || y == y1 || y == y2) ? 1 : 0;
-            }
-        }
+    public void setWest(boolean west) {
+        this.west = west;
     }
 
-    public void connect(Room that) {
+    public void setEast(boolean east) {
+        this.east = east;
+    }
 
-        if (this.isNeighbor(that)) {
+    public boolean hasNorth() {
+        return north;
+    }
 
-            int[] door = new int[2];
+    public boolean hasSouth() {
+        return south;
+    }
 
-            if (this.x1 == that.x2) { // this room is right of that room
+    public boolean hasWest() {
+        return west;
+    }
 
-                door[0] = this.x1;
-                int minY = max(this.y1, that.y1);
-                int maxY = min(this.y2, that.y2);
-                door[1] = minY + ((maxY - minY) / 2);
+    public boolean hasEast() {
+        return east;
+    }
+    
+    @Override
+    public int hashCode() {
+        return hash;
+    }
 
-            } else if (this.x2 == that.x1) { // this room is left of that room
-
-                door[0] = this.x2;
-                int minY = max(this.y1, that.y1);
-                int maxY = min(this.y2, that.y2);
-                door[1] = minY + ((maxY - minY) / 2);
-
-            } else if (this.y1 == that.y2) { // this room is below that room
-
-                int minX = max(this.x1, that.x1);
-                int maxX = min(this.x2, that.x2);
-                door[0] = minX + ((maxX - minX) / 2);
-                door[1] = this.y1;
-
-            } else if (this.y2 == that.y1) { // this room is above that room
-
-                int minX = max(this.x1, that.x1);
-                int maxX = min(this.x2, that.x2);
-                door[0] = minX + ((maxX - minX) / 2);
-                door[1] = this.y2;
-
-            } else {
-
-                throw new RuntimeException("WTF!");
-            }
-
-            this.doors.add(door);
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
         }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Room other = (Room) obj;
+        if (this.hash != other.hash) {
+            return false;
+        }
+        return true;
+    }
+    
+    @Override
+    public String toString() {
+        
+        return "[" + top +
+                ", " + left +
+                ", " + bottom +
+                ", " + right +
+                "]";
     }
 }

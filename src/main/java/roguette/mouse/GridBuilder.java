@@ -2,10 +2,10 @@ package roguette.mouse;
 
 import roguette.Item;
 import roguette.Creature;
-import roguette.MapGen;
 import roguette.Cell;
 import roguette.Grid;
 import java.awt.Point;
+import roguette.RoomGen;
 
 public class GridBuilder implements Const {
 
@@ -21,7 +21,7 @@ public class GridBuilder implements Const {
 
     GridBuilder createRooms() {
 
-        int[][] map = MapGen.randomRectangularRooms(columns, rows);
+        int[][] map = RoomGen.division(columns, rows);
 
         for (int x = 0; x < columns; x++) {
             for (int y = 0; y < rows; y++) {
