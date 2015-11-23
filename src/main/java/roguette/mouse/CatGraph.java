@@ -10,6 +10,7 @@ import roguette.Creature;
 import roguette.Graph;
 import roguette.Grid;
 import roguette.Vertex;
+import static roguette.mouse.Const.WALL;
 
 public class CatGraph implements Graph<Point> {
 
@@ -52,6 +53,12 @@ public class CatGraph implements Graph<Point> {
         if(p.x >= 0 && p.y >= 0 && p.x < grid.width && p.y < grid.height) {
             
             Cell cell = grid.getCell(p.x, p.y);
+            
+            if(cell.getType() == WALL) {
+                
+                return false;
+            }
+            
             Creature c = cell.getOccupant();
             
             return c == null || c.getType() == Const.MOUSE;
