@@ -8,8 +8,8 @@ public interface Const {
     int WON = 1;
     int LOST = 2;
 
-    int COLUMNS = 85;
-    int ROWS = 85;
+    int COLUMNS = 91;
+    int ROWS = 91;
 
     int WALL = 0;
     int FLOOR = 1;
