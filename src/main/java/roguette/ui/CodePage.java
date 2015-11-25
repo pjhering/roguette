@@ -93,6 +93,11 @@ public class CodePage {
             ys[i] = offsetY + (rs[i] * rowHeight) + (rs[i] * vGap);
         }
     }
+    
+    public static CodePage getDefault() throws IOException {
+        
+        return new CodePage("/cp437_12x12.png", 16, 16);
+    }
 
     @Override
     public String toString() {
