@@ -7,9 +7,9 @@ import java.util.List;
 import static java.util.Objects.requireNonNull;
 import roguette.Cell;
 import roguette.Creature;
-import roguette.Graph;
+import roguette.pathfinder.Graph;
 import roguette.Grid;
-import roguette.Vertex;
+import roguette.mapgen.Vertex;
 import static roguette.mouse.Const.WALL;
 
 public class CatGraph implements Graph<Point> {

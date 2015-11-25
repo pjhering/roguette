@@ -1,4 +1,4 @@
-package roguette;
+package roguette.pathfinder;
 
 import java.util.ArrayList;
 import java.util.Collection;

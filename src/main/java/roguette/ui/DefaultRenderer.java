@@ -1,8 +1,12 @@
-package roguette;
+package roguette.ui;
 
 import java.awt.Point;
 import static java.lang.Math.*;
 import java.util.List;
+import roguette.Cell;
+import roguette.Creature;
+import roguette.Grid;
+import roguette.Item;
 import static java.util.Objects.requireNonNull;
 
 /**

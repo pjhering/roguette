@@ -4,9 +4,9 @@ import roguette.Grid;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
-import roguette.AStar;
+import roguette.pathfinder.AStar;
 import roguette.Cell;
-import roguette.Vertex;
+import roguette.mapgen.Vertex;
 import static roguette.mouse.Const.*;
 
 public class CatMovement {

@@ -1,11 +1,11 @@
 package roguette.mouse;
 
 import java.awt.Point;
-import roguette.AStar;
+import roguette.pathfinder.AStar;
 import roguette.Cell;
 import roguette.Creature;
 import roguette.Grid;
-import roguette.Vertex;
+import roguette.mapgen.Vertex;
 
 class CatAStar extends AStar<Point> {
 

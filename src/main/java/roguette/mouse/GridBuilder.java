@@ -5,7 +5,7 @@ import roguette.Creature;
 import roguette.Cell;
 import roguette.Grid;
 import java.awt.Point;
-import roguette.RoomGen;
+import roguette.mapgen.RoomGen;
 
 public class GridBuilder implements Const {
 

@@ -1,4 +1,4 @@
-package roguette;
+package roguette.ui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,7 +11,7 @@ import java.awt.image.ShortLookupTable;
 import static java.util.Arrays.fill;
 import static java.util.Objects.requireNonNull;
 import javax.swing.JComponent;
-import roguette.CodePage.Source;
+import roguette.ui.CodePage.Source;
 
 public class CodePageConsole extends JComponent implements Console {
 

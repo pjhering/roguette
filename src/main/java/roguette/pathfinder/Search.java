@@ -1,4 +1,6 @@
-package roguette;
+package roguette.pathfinder;
+
+import roguette.mapgen.Vertex;
 
 public interface Search<T> {
     

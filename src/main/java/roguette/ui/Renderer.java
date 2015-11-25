@@ -1,4 +1,4 @@
-package roguette;
+package roguette.ui;
 
 public interface Renderer {
 

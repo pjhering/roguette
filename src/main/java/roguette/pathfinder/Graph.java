@@ -1,6 +1,7 @@
-package roguette;
+package roguette.pathfinder;
 
 import java.util.Collection;
+import roguette.mapgen.Vertex;
 
 public interface Graph<T> {
     

@@ -1,4 +1,4 @@
-package roguette;
+package roguette.ui;
 
 import java.awt.Color;
 

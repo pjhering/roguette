@@ -1,4 +1,4 @@
-package roguette;
+package roguette.mapgen;
 
 import java.awt.Point;
 import java.util.ArrayList;
