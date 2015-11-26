@@ -5,8 +5,9 @@ import static java.lang.Math.*;
 import java.util.List;
 import roguette.Cell;
 import roguette.Creature;
-import roguette.Grid;
+import roguette.BasicGrid;
 import roguette.Item;
+import static java.util.Objects.requireNonNull;
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -18,11 +19,11 @@ import static java.util.Objects.requireNonNull;
 public class DefaultRenderer implements Renderer {
 
     private final Console console;
-    private final Grid grid;
+    private final BasicGrid grid;
     private final int playerID;
     private final Tile[] tiles;
 
-    public DefaultRenderer(Console console, Grid grid, int playerID, Tile[] tiles) {
+    public DefaultRenderer(Console console, BasicGrid grid, int playerID, Tile[] tiles) {
 
         this.console = requireNonNull(console);
         this.grid = requireNonNull(grid);
