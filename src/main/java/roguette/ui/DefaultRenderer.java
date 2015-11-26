@@ -3,12 +3,11 @@ package roguette.ui;
 import java.awt.Point;
 import static java.lang.Math.*;
 import java.util.List;
+import static java.util.Objects.requireNonNull;
+import roguette.BasicGrid;
 import roguette.Cell;
 import roguette.Creature;
-import roguette.BasicGrid;
 import roguette.Item;
-import static java.util.Objects.requireNonNull;
-import static java.util.Objects.requireNonNull;
 
 /**
  * The Render uses the Console to draw the World. A player Creature is required

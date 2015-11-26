@@ -3,8 +3,8 @@ package roguette.pathfinder;
 import java.util.HashSet;
 import java.util.LinkedList;
 import static java.util.Objects.requireNonNull;
-import java.util.Set;
 import java.util.Queue;
+import java.util.Set;
 import roguette.mapgen.Vertex;
 
 public class BreadthFirst<T> implements Search<T> {
